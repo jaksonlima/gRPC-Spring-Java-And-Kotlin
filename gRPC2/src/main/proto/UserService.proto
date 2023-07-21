@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com";
+
+package br.com;
+
+message UserResponse {
+  optional string name = 1;
+  optional string description = 2;
+}
+
+message UserRequest {
+  optional string name = 1;
+  optional string description = 2;
+}
+
+message UserRequestStream {
+  string name = 1;
+}
+
+message UserResponseStream {
+  string name = 1;
+  string id = 2;
+}
+
+service UserService {
+  rpc user(UserRequest) returns (UserResponse);
+  rpc userStreamServerSideStreamin(UserRequestStream) returns (stream UserResponseStream);
+  rpc userStreamClientSideStreaming(stream UserRequestStream) returns (UserResponseStream);
+  rpc userStreamBidirectional(stream UserRequestStream) returns (stream UserResponseStream);
+}
